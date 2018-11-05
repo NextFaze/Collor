@@ -14,14 +14,16 @@ extension CollectionUpdater {
         let itemsInError = items.reduce("") { result, item in
             return result + "- section: \(item.0), uid:\(item.1)\n"
         }
-        NSException(name: .collorDuplicateItemUID, reason: "Duplicate for items:\n \(itemsInError)", userInfo: nil).raise()
+        print("Duplicate for items:\n \(itemsInError)")
+//        NSException(name: .collorDuplicateItemUID, reason: "Duplicate for items:\n \(itemsInError)", userInfo: nil).raise()
     }
     
     private func raiseItemsWithoutUIDException(items:[(Int, Int, CollectionCellDescribable)]) {
         let itemsInError = items.reduce("") { result, item in
             return result + "- section: \(item.0), item:\(item.1), description:\(item.2)\n"
         }
-        NSException(name: .collorMissingItemUID, reason: "No UID given for items:\n \(itemsInError)", userInfo: nil).raise()
+        print("No UID given for items:\n \(itemsInError)")
+//        NSException(name: .collorMissingItemUID, reason: "No UID given for items:\n \(itemsInError)", userInfo: nil).raise()
     }
 
     public func diff(sections sectionDescriptors:[CollectionSectionDescribable]) {
@@ -29,12 +31,14 @@ extension CollectionUpdater {
         sectionDescriptors.forEach { sectionDescriptor in
             
             guard let sectionIndex = sectionDescriptor.index else {
-                NSException(name: .collorSectionIndexNil, reason: "SectionDescriptor index nil, call computeIndices() before.", userInfo: nil).raise()
+                print("SectionDescriptor index nil, call computeIndices() before.")
+//                NSException(name: .collorSectionIndexNil, reason: "SectionDescriptor index nil, call computeIndices() before.", userInfo: nil).raise()
                 return
             }
             
             guard let sectionBuilder = sectionDescriptor.builder else {
-                NSException(name: .collorSectionBuilderNil, reason: "SectionDescriptor reloadSection closure nil, call reloadSection() before", userInfo: nil).raise()
+                print("SectionDescriptor reloadSection closure nil, call reloadSection() before")
+//                NSException(name: .collorSectionBuilderNil, reason: "SectionDescriptor reloadSection closure nil, call reloadSection() before", userInfo: nil).raise()
                 return
             }
             
@@ -138,12 +142,14 @@ extension CollectionUpdater {
             let sectionsInError = sections.reduce("") { result, section in
                 return result + "- section:\(section.0), description:\(section.1)\n"
             }
-            NSException(name: .collorMissingSectionUID, reason: "No UID given for sections:\n \(sectionsInError)", userInfo: nil).raise()
+            print("No UID given for sections:\n \(sectionsInError)")
+//            NSException(name: .collorMissingSectionUID, reason: "No UID given for sections:\n \(sectionsInError)", userInfo: nil).raise()
         } catch UIDError.sectionsDuplicateError(let sections) {
             let sectionsInError = sections.reduce("") { result, section in
                 return result + "- section:\(section.0), description:\(section.1)\n"
             }
-            NSException(name: .collorDuplicateSectionUID, reason: "Duplicate for sections:\n \(sectionsInError)", userInfo: nil).raise()
+            print("Duplicate for sections:\n \(sectionsInError)")
+//            NSException(name: .collorDuplicateSectionUID, reason: "Duplicate for sections:\n \(sectionsInError)", userInfo: nil).raise()
         } catch UIDError.itemsWithoutUIDError(let items) {
             raiseItemsWithoutUIDException(items: items)
         } catch UIDError.itemsDuplicateError(let items) {
