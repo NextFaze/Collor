@@ -8,9 +8,9 @@
 
 import Foundation
 
-public class CollectionDataSource: NSObject, UICollectionViewDataSource {
+open class CollectionDataSource: NSObject, UICollectionViewDataSource {
     
-    public var collectionData: CollectionData?
+    open var collectionData: CollectionData?
     public weak var delegate: CollectionUserEventDelegate?
     
     public init(delegate: CollectionUserEventDelegate?) {
@@ -19,16 +19,16 @@ public class CollectionDataSource: NSObject, UICollectionViewDataSource {
     }
     
     // MARK: UICollectionViewDataSource
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
         collectionData?.computeIndices()
         return collectionData?.sectionsCount() ?? 0
     }
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionData?.sections[section].cells.count ?? 0
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let collectionData = collectionData else {
             return UICollectionViewCell()

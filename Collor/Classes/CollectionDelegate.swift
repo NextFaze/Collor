@@ -11,7 +11,7 @@ import UIKit
 
 open class CollectionDelegate: NSObject, UICollectionViewDelegate {
     
-    public var collectionData: CollectionData?
+    open var collectionData: CollectionData?
     public weak var delegate: CollectionDidSelectCellDelegate?
     
     /**
@@ -26,7 +26,7 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate {
         super.init()
     }
     
-    public func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    open func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         if let sectionDescriptor = collectionData?.sections[indexPath.section] {
             let cellDescriptor = sectionDescriptor.cells[indexPath.item]
             return cellDescriptor.selectable
@@ -35,7 +35,7 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate {
     }
     
     // MARK: UICollectionViewDelegate
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let sectionDescriptor = collectionData?.sections[indexPath.section] {
             let cellDescriptor = sectionDescriptor.cells[indexPath.item]
             delegate?.didSelect(cellDescriptor, sectionDescriptor: sectionDescriptor, indexPath: indexPath)
@@ -46,7 +46,7 @@ open class CollectionDelegate: NSObject, UICollectionViewDelegate {
 
 extension CollectionDelegate : UICollectionViewDelegateFlowLayout {
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if let sectionDescriptor = collectionData?.sections[indexPath.section] {
             let cellDescriptor = sectionDescriptor.cells[indexPath.item]
             return cellDescriptor.size(collectionView, sectionDescriptor: sectionDescriptor)
@@ -54,14 +54,14 @@ extension CollectionDelegate : UICollectionViewDelegateFlowLayout {
         return CGSize.zero
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if let sectionDescriptor = collectionData?.sections[section] {
             return sectionDescriptor.sectionInset(collectionView)
         }
         return UIEdgeInsets()
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
             return 0
         }
@@ -72,7 +72,7 @@ extension CollectionDelegate : UICollectionViewDelegateFlowLayout {
         return layout.minimumInteritemSpacing
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         guard let layout = collectionViewLayout as? UICollectionViewFlowLayout else {
             return 0
         }
@@ -87,7 +87,7 @@ extension CollectionDelegate : UICollectionViewDelegateFlowLayout {
 // forward
 extension CollectionDelegate {
     
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
         forwardingDelegate?.scrollViewDidScroll?(scrollView)
     }
 }
